@@ -1,5 +1,6 @@
 "use client";
 
+// import { useRouter } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
 
 type ProductCounterProps = {
@@ -9,6 +10,13 @@ type ProductCounterProps = {
 export const ProductCounter = ({children}: ProductCounterProps) => {
     
     const [counter, setCounter] = useState<number>(0);
+    // const router = useRouter();
+
+    // useEffect(() => {
+    //     if (true) {
+    //         router.replace('/dashboard')
+    //     }
+    // }, [router]);
     
     return (
         <div>
