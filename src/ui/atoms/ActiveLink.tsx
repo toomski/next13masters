@@ -1,12 +1,11 @@
 "use client"
 
 import { type ReactNode } from 'react'
-import Link from 'next/link'
+import Link, { type LinkProps} from 'next/link'
 import {usePathname} from 'next/navigation'
 import clsx from 'clsx'
 
-type ActiveLinkProps = {
-    href: string
+type ActiveLinkProps = LinkProps<string> & {
     children: ReactNode
 }
 
