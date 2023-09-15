@@ -1,5 +1,5 @@
-import { getProductsList } from "../../api/products"
 import { ProductList } from "./ProductList"
+import { getProductsList } from "@/api/products"
 
 // const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
