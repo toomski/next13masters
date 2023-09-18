@@ -2,7 +2,7 @@ import { type Route } from "next";
 import { ActiveLink } from './ActiveLink'
 
 type PaginationProps = {
-    items: Route<string>[]
+    items: string[]
 }
 
 export const Pagination = ({items}: PaginationProps) => {
@@ -12,7 +12,7 @@ export const Pagination = ({items}: PaginationProps) => {
                 {items.map((item, index) => (
                     <li key={index}>
                         <ActiveLink 
-                            href={item} 
+                            href={item as Route<string>} 
                             className="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium"
                             activeClassName="border-blue-500 text-blue-600">
                             {index + 1}
