@@ -1,23 +1,49 @@
-"use client"
+"use client";
 
-import { type ReactNode } from 'react'
-import Link, { type LinkProps} from 'next/link'
-import {usePathname} from 'next/navigation'
-import clsx from 'clsx'
+import Link from "next/link";
+import { type ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import { type Route } from "next";
 
-type ActiveLinkProps = LinkProps<string> & {
+export type ActiveLinkProps<T extends string> = {
+    href: Route<T>
     children: ReactNode
+    prefetch?: boolean | "onHover";
+    exact?: boolean;
+    className?: string;
+    activeClassName?: string;
 }
 
-export const ActiveLink = ({href, children}: ActiveLinkProps) => {
-    const pathname = usePathname()
-    const isActive = pathname === href
-    const className = clsx('text-blue-400 hover:text-blue-600', {
-        underline: isActive,
-    })
+export const ActiveLink = <T extends string>(props: ActiveLinkProps<T>) => {
+
+    const {
+        href,
+        children,
+        prefetch,
+        exact = false,
+        className,
+        activeClassName
+    } = props
+
+    const pathname = usePathname();
+    const isActive = pathname === href || (!exact && pathname.startsWith(href));
+
     return (
-        <Link href={href} className={className}>
+        <Link {...usePrefetchOnHover(prefetch)} href={href} className={clsx(className, isActive && activeClassName)}>
             {children}
         </Link>
     )
+}
+
+function usePrefetchOnHover(prefetch?: boolean | "onHover") {
+  const [shouldPrefetch, setShouldPrefetch] = useState<false | undefined>(false)
+  if (prefetch === "onHover") {
+    return {
+      prefetch: shouldPrefetch,
+      onMouseOver: () => setShouldPrefetch(undefined),
+      onFocus: () => setShouldPrefetch(undefined),
+    }
+  }
+  return { prefetch: prefetch ? undefined : prefetch }
 }
