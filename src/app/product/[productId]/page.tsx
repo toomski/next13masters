@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: ProductPageParams) {
 }
 
 export async function generateStaticParams() {
-	const products = await getProductsList(); 
+	const products = await getProductsList({pageNumber: 0}); 
 	return products.map((product) => ({ productId: product.id }));
 }
 
