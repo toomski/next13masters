@@ -13,6 +13,7 @@ export const Pagination = ({items}: PaginationProps) => {
                     <li key={index}>
                         <ActiveLink 
                             href={item as Route<string>} 
+                            prefetch={"onHover"}
                             className="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium"
                             activeClassName="border-blue-500 text-blue-600">
                             {index + 1}
