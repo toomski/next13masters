@@ -1,11 +1,13 @@
-export type ProductItemType = {
-    id: string;
-    name: string;
-    category: string;
-    description: string;
-    price: number;
-    coverImage: {
-        src: string;
-        alt: string;
-    }
+export type ProductType = {
+	id: string;
+	title: string;
+	price: number;
+	description?: string;
+	category: string;
+	images: ProductImageType[];
+};
+
+export type ProductImageType = {
+	src: string;
+	alt: string;
 };

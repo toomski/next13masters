@@ -1,9 +1,26 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	pageExtensions: ['ts', 'tsx', 'mdx'],
 	experimental: {
-		typedRoutes: true,
+		typedRoutes: false,
 		mdxRs: true,
+	},
+	compiler: {
+		removeConsole: isProduction ? {exclude: ["error"]}: false,
+	},
+	rewrites: () => {
+		return [
+			{
+				source: "/products",
+				destination: "/products/1",
+			},
+			{
+				source: "/products/:slug",
+				destination: "/products/:slug/1",
+			},
+		];
 	},
 };
 

@@ -1,11 +1,11 @@
 import {ProductCoverImage} from '@/ui/atoms/ProductCoverImage'
 import {ProductListItemDescription} from '@/ui/atoms/ProductListItemDescription'
 
-import { type ProductItemType } from '@/ui/types'
+import { type ProductType } from '@/ui/types'
 import { ActiveLink } from '@/ui/atoms/ActiveLink'
 
 type ProductListItemProps = {
-    product: ProductItemType
+    product: ProductType
 }
 
 export const ProductListItem = ({product}: ProductListItemProps) => {
@@ -13,7 +13,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
         <li>
             <ActiveLink href={`/product/${product.id}`} prefetch="onHover">
               <article className='flex flex-col h-full justify-between'>
-                <ProductCoverImage {...product.coverImage} />
+                <ProductCoverImage {...product.images[0]} />
                 <ProductListItemDescription product={product} />
               </article>
             </ActiveLink>

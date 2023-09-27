@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { type Route } from "next";
 
 export type ActiveLinkProps<T extends string> = {
-    href: Route<T>
+    href: T
     children: ReactNode
     prefetch?: boolean | "onHover";
     exact?: boolean;
@@ -30,7 +30,7 @@ export const ActiveLink = <T extends string>(props: ActiveLinkProps<T>) => {
     const isActive = pathname === href || (!exact && pathname.startsWith(href));
 
     return (
-        <Link {...usePrefetchOnHover(prefetch)} href={href} className={clsx(className, isActive && activeClassName)}>
+        <Link {...usePrefetchOnHover(prefetch)} href={(href as Route<string>)} className={clsx(className, isActive && activeClassName)}>
             {children}
         </Link>
     )
