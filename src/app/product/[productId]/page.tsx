@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import { Suspense } from "react";
-import { getProductById, getProductsList } from "@/api/products";
+import { getProductById } from "@/api/products";
 import { ProductCoverImage } from '@/ui/atoms/ProductCoverImage'
 import { ProductListItemDescription } from '@/ui/atoms/ProductListItemDescription'
 import { SuggestedProductsList } from '@/ui/organisms/SuggestedProductsList'
@@ -16,7 +16,7 @@ export default async function ProductPage({ params }: ProductPageParams) {
 	return (
         <>
             <article className="max-w-xs">
-                <ProductCoverImage {...product.images[0]} />
+                <ProductCoverImage src={product.images[0]?.src} alt={product.images[0]?.alt} />
                 <ProductListItemDescription product={product} />
             </article>
             <aside>
@@ -42,7 +42,7 @@ export const generateMetadata = async ({ params }: ProductPageParams): Promise<M
             title: product.title,
             description: product.description,
             images: [
-                {url: product.images[0].src, alt: product.images[0].alt}
+                {url: product.images[0]?.src || '', alt: product.images[0]?.alt || ''}
             ]
         }
     }    

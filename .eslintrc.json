@@ -43,6 +43,9 @@
 
 		"import/no-duplicates": ["error", { "prefer-inline": true }],
 
+		// disallow import from next/router
+		"no-restricted-imports": ["error", "next/router"],
+
 		// false negatives
 		"import/namespace": ["off"],
 
@@ -69,13 +72,6 @@
 		"@typescript-eslint/restrict-template-expressions": [
 			"error",
 			{ "allowNumber": true, "allowBoolean": true }
-		],
-		"no-restricted-imports": [
-			"error",
-			{
-				"name": "next/router",
-				"message": "Please use next/navigtion instead."
-			}
 		]
 	},
 	"overrides": [

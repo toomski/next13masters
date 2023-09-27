@@ -15,14 +15,14 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
+		"noUncheckedIndexedAccess": true,
 		"plugins": [
 			{
 				"name": "next"
 			}
 		],
 		"paths": {
-			"@/*": ["./src/*"],
-			"@/ui/*": ["./src/ui/*"]
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": [
@@ -30,7 +30,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		".graphqlrc.ts"
+		".graphqlrc.js"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "tests"]
 }

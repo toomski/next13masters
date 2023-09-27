@@ -1,12 +1,12 @@
 import { executeGraphql } from "@/api/graphql"
 import { type ProductType } from "@/ui/types"
 import { 
-	type Product,
 	ProductGetByIdDocument,
 	type ProductGetByIdQueryVariables,
 	ProductsGetListDocument,
 	ProductsGetListBySlugDocument,
 	type ProductsGetListBySlugQueryVariables,
+	type ProductsGetListQuery
  } from "@/gql/graphql"
 
 export const getProductById = async ({id}: ProductGetByIdQueryVariables): Promise<ProductType> => {
@@ -47,7 +47,7 @@ export const getProductsGetListBySlug = async ({slug}: ProductsGetListBySlugQuer
 	
 }
 
-function mapProducts (products: Product[]): ProductType[] {
+function mapProducts (products: ProductsGetListQuery['products']): ProductType[] {
 	return products.map((product) => {
 		return {
 			id: product.id,

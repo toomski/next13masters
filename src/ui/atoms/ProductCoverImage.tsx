@@ -1,6 +1,6 @@
 type ProductCoverImageProps = {
-    src: string;
-    alt: string;
+    src?: string;
+    alt?: string;
 }
 
 export const ProductCoverImage = ({src, alt}: ProductCoverImageProps) => {
