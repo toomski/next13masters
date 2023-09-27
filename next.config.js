@@ -2,8 +2,20 @@
 const nextConfig = {
 	pageExtensions: ['ts', 'tsx', 'mdx'],
 	experimental: {
-		typedRoutes: true,
+		typedRoutes: false,
 		mdxRs: true,
+	},
+	rewrites: () => {
+		return [
+			{
+				source: "/products",
+				destination: "/products/1",
+			},
+			{
+				source: "/products/:slug",
+				destination: "/products/:slug/1",
+			},
+		];
 	},
 };
 

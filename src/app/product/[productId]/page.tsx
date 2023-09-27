@@ -11,12 +11,12 @@ type ProductPageParams = {
 
 export default async function ProductPage({ params }: ProductPageParams) {
 
-    const product = await getProductById(params.productId);
+    const product = await getProductById({id: params.productId});
 
 	return (
         <>
             <article className="max-w-xs">
-                <ProductCoverImage {...product.coverImage} />
+                <ProductCoverImage {...product.images[0]} />
                 <ProductListItemDescription product={product} />
             </article>
             <aside>
@@ -28,21 +28,21 @@ export default async function ProductPage({ params }: ProductPageParams) {
     );
 }
 
-export async function generateStaticParams() {
-	const products = await getProductsList({pageNumber: 0}); 
-	return products.map((product) => ({ productId: product.id }));
-}
+// export async function generateStaticParams() {
+// 	const products = await getProductsList({pageNumber: 0}); 
+// 	return products.map((product) => ({ productId: product.id }));
+// }
 
 export const generateMetadata = async ({ params }: ProductPageParams): Promise<Metadata> => {
-    const product = await getProductById(params.productId);
+    const product = await getProductById({id: params.productId});
     return {
-        title: product.name,
+        title: product.title,
         description: product.description,
         openGraph: {
-            title: product.name,
+            title: product.title,
             description: product.description,
             images: [
-                {url: product.coverImage.src, alt: product.coverImage.alt}
+                {url: product.images[0].src, alt: product.images[0].alt}
             ]
         }
     }    
