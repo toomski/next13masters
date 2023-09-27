@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import { NavBar } from '@/ui/organisms/NavBar'
 // import { Analytics } from '@vercel/analytics/react'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin', 'latin-ext'] })
 
 export const metadata: Metadata = {
   title: 'Products',

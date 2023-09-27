@@ -5,7 +5,7 @@ import { getProductsList } from "@/api/products";
 export default async function ProductsPage () {
 
     const products = await getProductsList()
-  
+
     if (!products) {
           throw notFound();
       }
@@ -13,4 +13,5 @@ export default async function ProductsPage () {
     return (
       <ProductList products={products} />
     )
-  }
+}
+  
