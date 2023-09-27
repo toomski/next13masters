@@ -1,4 +1,3 @@
-// import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ProductList } from "@/ui/organisms/ProductList";
 import { getProductsGetListBySlug } from "@/api/products";

@@ -13,7 +13,7 @@ const navLinks: NavLink[] = [
     {href: '/products', label: 'All'},
     {href: '/products/t-shirts', label: 'T-Shirts'},
     {href: '/products/hoodies', label: 'Hoodies'},
-    {href: '/products/accessories', label: 'accessories'},    
+    {href: '/products/accessories', label: 'Accessories'},    
 ];
 
 export const NavBar = () => {
