@@ -1,5 +1,11 @@
+import { CollectionsList } from "@/ui/organisms/CollectionsList";
+import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
+
 export default function HomePage() {
-  return (
-    <h1>Home Page</h1>
-  )
+	return (
+		<>
+			<CollectionsList />
+			<SuggestedProductsList />
+		</>
+	);
 }

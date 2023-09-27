@@ -1,12 +1,11 @@
-import { ProductList } from "./ProductList"
-import { getProductsList } from "@/api/products"
-
-// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { ProductList } from "./ProductList";
+import { getProductsList } from "@/api/products";
 
 export const SuggestedProductsList = async () => {
-    const products = await getProductsList();
-    // await sleep(5000);
-    return (
-        <ProductList products={products.slice(-4)} />
-    )
-}
+	const products = await getProductsList();
+	return (
+		<section className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
+			<ProductList products={products.slice(-4)} />
+		</section>
+	);
+};
