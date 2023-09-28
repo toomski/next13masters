@@ -10720,7 +10720,7 @@ export type CollectionGetBySlugQueryVariables = Exact<{
 }>;
 
 
-export type CollectionGetBySlugQuery = { collections: Array<{ id: string, slug: string, name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, image: { id: string, url: string } }> };
+export type CollectionGetBySlugQuery = { collections: Array<{ description?: string | null, id: string, slug: string, name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, image: { id: string, url: string } }> };
 
 export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10793,6 +10793,7 @@ export const CollectionGetBySlugDocument = new TypedDocumentString(`
     query CollectionGetBySlug($slug: String!) {
   collections(where: {slug: $slug}) {
     ...CollectionListItem
+    description
     products(first: 4) {
       ...ProductListItem
     }

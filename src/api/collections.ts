@@ -11,8 +11,7 @@ export const getCollectionsList = async () => {
 	return graphqlResponse.collections;
 };
 
-export const getCollectionsListBySlug = async ({ slug }: CollectionGetBySlugQueryVariables) => {
+export const getCollectionBySlug = async ({ slug }: CollectionGetBySlugQueryVariables) => {
 	const graphqlResponse = await executeGraphql(CollectionGetBySlugDocument, { slug });
-
-	return graphqlResponse.collections;
+	return graphqlResponse.collections[0] || null;
 };
