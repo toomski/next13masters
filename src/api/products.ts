@@ -6,6 +6,8 @@ import {
 	type ProductsGetListQueryVariables,
 	ProductsGetListBySlugDocument,
 	type ProductsGetListBySlugQueryVariables,
+	ProductsGetListBySearchDocument,
+	type ProductsGetListBySearchQueryVariables
 } from "@/gql/graphql";
 
 export const getProductById = async ({ id }: ProductGetByIdQueryVariables) => {
@@ -44,5 +46,15 @@ export const getProductsGetListBySlug = async ({ slug, count, offset }: Products
 	return {
 		products: graphqlResponse.products || [],
 		count: graphqlResponse.productsConnection.aggregate.count
+	};
+};
+
+export const getProductsGetListBySearch = async ({ search }: ProductsGetListBySearchQueryVariables) => {
+
+	const graphqlResponse = await executeGraphql(ProductsGetListBySearchDocument, { search });
+
+
+	return {
+		products: graphqlResponse.products || []
 	};
 };

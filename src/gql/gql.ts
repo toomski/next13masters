@@ -18,6 +18,7 @@ const documents = {
     "query CollectionsGetList {\n  collections {\n    ...CollectionListItem\n  }\n}": types.CollectionsGetListDocument,
     "query ProductGetById($id: ID!) {\n  product(where: {id: $id}) {\n    ...ProductListItem\n    variants {\n      ... on ProductSizeColorVariant {\n        id\n        name\n      }\n    }\n  }\n}": types.ProductGetByIdDocument,
     "query ProductsGetList($count: Int!, $offset: Int!) {\n  products(first: $count, skip: $offset) {\n    ...ProductListItem\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListDocument,
+    "query ProductsGetListBySearch($search: String!) {\n  products(where: {name_contains: $search}) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListBySearchDocument,
     "query ProductsGetListBySlug($slug: String!, $count: Int!, $offset: Int!) {\n  products(where: {categories_some: {slug: $slug}}, first: $count, skip: $offset) {\n    ...ProductListItem\n  }\n  productsConnection(where: {categories_some: {slug: $slug}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListBySlugDocument,
     "fragment CollectionListItem on Collection {\n  id\n  slug\n  name\n  image {\n    id\n    url\n  }\n}": types.CollectionListItemFragmentDoc,
     "fragment ProductItem on Product {\n  ...ProductListItem\n  variants {\n    ... on ProductSizeColorVariant {\n      id\n      name\n    }\n  }\n}": types.ProductItemFragmentDoc,
@@ -40,6 +41,10 @@ export function graphql(source: "query ProductGetById($id: ID!) {\n  product(whe
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetList($count: Int!, $offset: Int!) {\n  products(first: $count, skip: $offset) {\n    ...ProductListItem\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductsGetListBySearch($search: String!) {\n  products(where: {name_contains: $search}) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetListBySearchDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

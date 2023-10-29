@@ -1,9 +1,9 @@
 fragment ProductItem on Product {
 	...ProductListItem
-    variants {
-      ... on ProductSizeColorVariant {
-        id
-        name
-      }
+  variants {
+    ... on ProductSizeColorVariant {
+      id
+      name
     }
+  }
 }

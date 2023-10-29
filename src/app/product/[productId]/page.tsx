@@ -18,7 +18,7 @@ export default async function ProductPage({ params }: ProductPageParams) {
         <section className="mx-auto grid max-w-7xl p-8">
             <article className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="px-6">
-                    <ProductCoverImage src={product.images[0]?.url} alt={product.name} />
+                    <ProductCoverImage src={product.images[0]?.url} alt={product.name} height={512} width={512} />
                 </div>
                 <div className="px-6">
                     <h1 className="flex-auto text-3xl font-bold tracking-tight text-slate-900">{product.name}</h1>
