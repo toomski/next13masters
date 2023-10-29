@@ -1,4 +1,3 @@
-import { type Route } from "next";
 import { ActiveLink } from './ActiveLink'
 
 type PaginationProps = {
