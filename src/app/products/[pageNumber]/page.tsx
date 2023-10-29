@@ -22,3 +22,7 @@ export default async function ProductsPage({
 		</>
 	);
 }
+
+export async function generateStaticParams() {
+	return [{pageNumber: '1'}, {pageNumber: '2'}, {pageNumber: '3'}]
+}
