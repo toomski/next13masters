@@ -10,15 +10,16 @@ import {
 
 export const getProductById = async ({ id }: ProductGetByIdQueryVariables) => {
 	
-	const graphqlResponse = await executeGraphql(ProductGetByIdDocument, { id });
+	const graphqlResponse = await executeGraphql(ProductGetByIdDocument, { id })
 
-	const product = graphqlResponse.product;
+	const product = graphqlResponse.product
 
 	if (!product) {
 		throw new Error(`Product with id ${id} not found`);
 	}
 
-	return product;
+
+	return product
 };
 
 const parseGetList = ({ count, offset }: {count: number, offset: number}) : {count: number, offset: number}  => {

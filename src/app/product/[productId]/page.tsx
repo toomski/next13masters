@@ -4,6 +4,8 @@ import { getProductById } from "@/api/products";
 import { ProductCoverImage } from '@/ui/atoms/ProductCoverImage'
 import { ProductListItemDescription } from '@/ui/atoms/ProductListItemDescription'
 import { SuggestedProductsList } from '@/ui/organisms/SuggestedProductsList'
+import { formatMoney } from "@/utils"
+import { ProductVariant } from '@/ui/atoms/ProductVariant';
 
 type ProductPageParams = {
     params: { productId: string }
@@ -14,17 +16,30 @@ export default async function ProductPage({ params }: ProductPageParams) {
     const product = await getProductById({id: params.productId});
 
 	return (
-        <>
-            <article className="max-w-xs">
-                <ProductCoverImage src={product.images[0]?.url} alt={product.name} />
-                <ProductListItemDescription product={product} />
+        <section className="mx-auto grid max-w-7xl p-8">
+            <article className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="px-6">
+                    <ProductCoverImage src={product.images[0]?.url} alt={product.name} />
+                </div>
+                <div className="px-6">
+                    <h1 className="flex-auto text-3xl font-bold tracking-tight text-slate-900">{product.name}</h1>
+                    <div className="mt-4 flex items-center">
+                        <div className="font-base small-caps text-lg text-slate-800">{formatMoney(product.price/100)}</div>
+                    </div>
+                    <div className="mt-4 space-y-6">
+                        <p className="font-sans text-base text-slate-500">{product.description}</p>
+                    </div>
+                    <div className="mt-4 space-y-6">
+                        <ProductVariant product={product} />
+                    </div>
+                </div>
             </article>
             <aside>
                 <Suspense fallback="Ładowanie sugerowanych produktów...">
                     <SuggestedProductsList />
                 </Suspense>   
             </aside>
-        </>
+        </section>
     );
 }
 
