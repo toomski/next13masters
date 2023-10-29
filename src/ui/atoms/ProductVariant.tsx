@@ -10,6 +10,10 @@ export const ProductVariant = ({product}: ProductVariantProps) => {
 
     const variants = product.variants as {id: string, name: string}[]
     
+    if (!variants.length) {
+        return <></>
+    }
+
     return (
         <div className="flex flex-col flex-nowrap gap-4 font-mono text-white text-sm font-bold leading-6 bg-stripes-sky rounded-lg">
             {variants.map((variant) => ((
