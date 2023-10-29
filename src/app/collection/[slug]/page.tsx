@@ -41,7 +41,12 @@ export const generateMetadata = async ({ params }: CollectionPageParams): Promis
 		throw notFound();
 	}
 
+	if (!process.env.APP_URL) {
+		throw new Error('APP_URL was not provided')
+	}
+
 	return {
+		metadataBase: new URL(process.env.APP_URL),
 		title: collection.name,
 		description: collection.description || "",
 		openGraph: {

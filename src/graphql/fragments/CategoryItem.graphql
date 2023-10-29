@@ -1,0 +1,8 @@
+fragment CategoryItem on Category {
+    id
+    name
+    slug
+    products {
+        id
+    }
+}

@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { type ActiveLinkProps, ActiveLink } from "@/ui/atoms/ActiveLink";
 import { Search } from "@/ui/atoms/Search";
 
@@ -45,7 +46,9 @@ export const NavBar = () => {
 						</nav>
 					</div>
 					<div className="flex h-full flex-1 items-center px-2 lg:ml-6 lg:h-16 lg:justify-end">
-						<Search />	
+						<Suspense>
+							<Search />
+						</Suspense>	
 					</div>
 				</div>
 			</div>

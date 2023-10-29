@@ -22,19 +22,3 @@ export default async function ProductsPage({
 		</>
 	);
 }
-
-// export async function generateStaticParams({ params: { pageNumber } }: { params: { pageNumber: string } }) {
-
-// 	const {products, count} = await getProductsList({count: 10, offset: parseInt(pageNumber)});
-
-
-// 	if (category === "t-shirts") {
-// 		return [{ pageNumber: "1" }, { pageNumber: "2" }];
-// 	}
-
-// 	if (category === "boots") {
-// 		return [{ pageNumber: "1" }];
-// 	}
-
-// 	return [];
-// }

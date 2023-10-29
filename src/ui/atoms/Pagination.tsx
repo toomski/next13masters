@@ -7,7 +7,7 @@ type PaginationProps = {
 
 export const Pagination = ({route, count}: PaginationProps) => {
 
-    const pages = Math.ceil((count + 1) / 4)
+    const pages = Math.floor((count + 1) / 4)
 
     return (
         <nav className="mt-auto flex items-center justify-center border-t border-slate-200 px-4">

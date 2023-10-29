@@ -11,10 +11,3 @@ export default function ProductsCategoryLayout({children}: ProductsCategoryLayou
         </section>
     );
 }
-
-export async function generateStaticParams() {
-    return [
-        { category: 't-shirts' },
-        { category: 'boots' },
-    ]
-}
