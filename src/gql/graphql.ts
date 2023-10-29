@@ -2483,6 +2483,46 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
+/** An object with an ID */
+export type Entity = {
+  /** The id of the object. */
+  id: Scalars['ID']['output'];
+  /** The Stage of an object */
+  stage: Stage;
+};
+
+/** This enumeration holds all typenames that implement the Entity interface. Components implement the Entity interface. At the moment models are not supported, models are listed in this enum to avoid an empty enum without any components. */
+export type EntityTypeName =
+  /** Asset system model */
+  | 'Asset'
+  /** Category of products, e.g. Menswear. */
+  | 'Category'
+  /** Collection of products, e.g. Winter Sale. */
+  | 'Collection'
+  | 'Currency'
+  | 'Order'
+  | 'OrderItem'
+  | 'Product'
+  | 'ProductColorVariant'
+  | 'ProductSizeColorVariant'
+  | 'ProductSizeVariant'
+  | 'Review'
+  /** Scheduled Operation system model */
+  | 'ScheduledOperation'
+  /** Scheduled Release system model */
+  | 'ScheduledRelease'
+  /** User system model */
+  | 'User';
+
+/** Allows to specify input to query components directly */
+export type EntityWhereInput = {
+  /** The ID of an object */
+  id: Scalars['ID']['input'];
+  stage: Stage;
+  /** The Type name of an object */
+  typename: EntityTypeName;
+};
+
 export type ImageFit =
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
   | 'clip'
@@ -7980,6 +8020,8 @@ export type Query = {
   /** Retrieve document version */
   currencyVersion?: Maybe<DocumentVersion>;
   /** Fetches an object given its ID */
+  entities?: Maybe<Array<Entity>>;
+  /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single order */
   order?: Maybe<Order>;
@@ -8207,6 +8249,11 @@ export type QueryCurrencyArgs = {
 
 export type QueryCurrencyVersionArgs = {
   where: VersionWhereInput;
+};
+
+
+export type QueryEntitiesArgs = {
+  where: Array<EntityWhereInput>;
 };
 
 
@@ -10720,7 +10767,7 @@ export type CollectionGetBySlugQueryVariables = Exact<{
 }>;
 
 
-export type CollectionGetBySlugQuery = { collections: Array<{ description?: string | null, id: string, slug: string, name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, image: { id: string, url: string } }> };
+export type CollectionGetBySlugQuery = { collections: Array<{ description?: string | null, id: string, slug: string, name: string, products: Array<{ id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, image: { id: string, url: string } }> };
 
 export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10732,23 +10779,28 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
 
-export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductsGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
-
-export type ProductsGetListBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+export type ProductsGetListQueryVariables = Exact<{
+  count: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
 }>;
 
 
-export type ProductsGetListBySlugQuery = { categories: Array<{ products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> }> };
+export type ProductsGetListQuery = { products: Array<{ id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, productsConnection: { aggregate: { count: number } } };
+
+export type ProductsGetListBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+  count: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+}>;
+
+
+export type ProductsGetListBySlugQuery = { products: Array<{ id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }>, productsConnection: { aggregate: { count: number } } };
 
 export type CollectionListItemFragment = { id: string, slug: string, name: string, image: { id: string, url: string } };
 
-export type ProductListItemFragment = { id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> };
+export type ProductListItemFragment = { id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10779,6 +10831,7 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  slug
   description
   categories(first: 1) {
     name
@@ -10811,6 +10864,7 @@ export const CollectionGetBySlugDocument = new TypedDocumentString(`
 fragment ProductListItem on Product {
   id
   name
+  slug
   description
   categories(first: 1) {
     name
@@ -10844,6 +10898,7 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  slug
   description
   categories(first: 1) {
     name
@@ -10854,14 +10909,20 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList {
-  products(first: 10) {
+    query ProductsGetList($count: Int!, $offset: Int!) {
+  products(first: $count, skip: $offset) {
     ...ProductListItem
+  }
+  productsConnection {
+    aggregate {
+      count
+    }
   }
 }
     fragment ProductListItem on Product {
   id
   name
+  slug
   description
   categories(first: 1) {
     name
@@ -10872,16 +10933,20 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsGetListBySlugDocument = new TypedDocumentString(`
-    query ProductsGetListBySlug($slug: String!) {
-  categories(where: {slug: $slug}) {
-    products(first: 10) {
-      ...ProductListItem
+    query ProductsGetListBySlug($slug: String!, $count: Int!, $offset: Int!) {
+  products(where: {categories_some: {slug: $slug}}, first: $count, skip: $offset) {
+    ...ProductListItem
+  }
+  productsConnection(where: {categories_some: {slug: $slug}}) {
+    aggregate {
+      count
     }
   }
 }
     fragment ProductListItem on Product {
   id
   name
+  slug
   description
   categories(first: 1) {
     name

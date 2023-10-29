@@ -8,7 +8,7 @@ type CollectionListItemProps = {
 
 export const CollectionListItem = ({ collection }: CollectionListItemProps) => {
 	return (
-		<div className="group relative">
+		<ActiveLink href={`/collection/${collection.slug}`} prefetch="onHover" className="group relative">
 			<div className="sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 relative h-80 w-full overflow-hidden rounded-lg bg-white transition group-hover:scale-110 group-hover:opacity-75 sm:h-64">
 				<NextImage
 					src={collection.image.url}
@@ -18,9 +18,7 @@ export const CollectionListItem = ({ collection }: CollectionListItemProps) => {
 					className="h-full w-full object-cover object-center"
 				/>
 			</div>
-			<ActiveLink href={`/collection/${collection.slug}`} prefetch="onHover">
-				<h3 className="mt-2 font-bold text-slate-700">{collection.name}</h3>
-			</ActiveLink>
-		</div>
+			<h3 className="mt-2 font-bold text-slate-700">{collection.name}</h3>
+		</ActiveLink>
 	);
 };

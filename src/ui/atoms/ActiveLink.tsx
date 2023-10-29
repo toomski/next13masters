@@ -27,10 +27,10 @@ export const ActiveLink = <T extends string>(props: ActiveLinkProps<T>) => {
     } = props
 
     const pathname = usePathname();
-    const isActive = pathname === href || (!exact && pathname.startsWith(href));
+    const isActive = exact ? pathname === href : pathname.startsWith(href);
 
     return (
-        <Link {...usePrefetchOnHover(prefetch)} href={(href as Route<string>)} className={clsx(className, isActive && activeClassName)}>
+        <Link {...usePrefetchOnHover(prefetch)} href={(href as Route<string>)} className={clsx(className, isActive && activeClassName)} {...(isActive && { "aria-current": "page" })}>
             {children}
         </Link>
     )

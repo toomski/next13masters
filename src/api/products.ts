@@ -3,11 +3,13 @@ import {
 	ProductGetByIdDocument,
 	type ProductGetByIdQueryVariables,
 	ProductsGetListDocument,
+	type ProductsGetListQueryVariables,
 	ProductsGetListBySlugDocument,
 	type ProductsGetListBySlugQueryVariables,
 } from "@/gql/graphql";
 
 export const getProductById = async ({ id }: ProductGetByIdQueryVariables) => {
+	
 	const graphqlResponse = await executeGraphql(ProductGetByIdDocument, { id });
 
 	const product = graphqlResponse.product;
@@ -19,14 +21,27 @@ export const getProductById = async ({ id }: ProductGetByIdQueryVariables) => {
 	return product;
 };
 
-export const getProductsList = async () => {
-	const graphqlResponse = await executeGraphql(ProductsGetListDocument, {});
+const parseGetList = ({ count, offset }: {count: number, offset: number}) : {count: number, offset: number}  => {
+	return { count, offset: count * (offset - 1) }	
+}
 
-	return graphqlResponse.products;
+export const getProductsList = async ({count, offset}: ProductsGetListQueryVariables) => {
+
+	const graphqlResponse = await executeGraphql(ProductsGetListDocument, parseGetList({count, offset}));
+
+	return {
+		products: graphqlResponse.products || [],
+		count: graphqlResponse.productsConnection.aggregate.count
+	};
 };
 
-export const getProductsGetListBySlug = async ({ slug }: ProductsGetListBySlugQueryVariables) => {
-	const graphqlResponse = await executeGraphql(ProductsGetListBySlugDocument, { slug });
+export const getProductsGetListBySlug = async ({ slug, count, offset }: ProductsGetListBySlugQueryVariables) => {
 
-	return graphqlResponse.categories[0]?.products || [];
+	const graphqlResponse = await executeGraphql(ProductsGetListBySlugDocument, { slug, ...parseGetList({count, offset}) });
+
+
+	return {
+		products: graphqlResponse.products || [],
+		count: graphqlResponse.productsConnection.aggregate.count
+	};
 };

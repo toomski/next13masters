@@ -13,9 +13,9 @@ type NavLink = {
 const navLinks: NavLink[] = [
 	{ href: "/", label: "Home" },
 	{ href: "/products", label: "All" },
-	{ href: "/products/t-shirts", label: "T-Shirts" },
-	{ href: "/products/hoodies", label: "Hoodies" },
-	{ href: "/products/accessories", label: "Accessories" },
+	{ href: "/categories/t-shirts", label: "T-Shirts" },
+	{ href: "/categories/hoodies", label: "Hoodies" },
+	{ href: "/categories/accessories", label: "Accessories" },
 ];
 
 export const NavBar = () => {
@@ -29,7 +29,6 @@ export const NavBar = () => {
 							<li className="first:pl-4 last:pr-4 lg:px-0" key={index}>
 								<ActiveLink
 									href={href}
-									exact
 									className={linkClassName}
 									activeClassName={activeLinkClassName}
 								>

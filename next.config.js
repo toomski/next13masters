@@ -11,28 +11,29 @@ const nextConfig = {
 			},
 		],
 	},
-	experimental: {
-		typedRoutes: false,
-		mdxRs: true,
-	},
 	compiler: {
 		removeConsole: isProduction ? {exclude: ["error"]}: false,
 	},
-	rewrites: () => {
+	experimental: {
+		typedRoutes: true,
+		mdxRs: true,
+		serverActions: true,
+	},
+	async redirects() {
 		return [
 			{
 				source: "/products",
 				destination: "/products/1",
+				permanent: false,
 			},
 			{
-				source: "/products/:slug",
-				destination: "/products/:slug/1",
+				source: "/categories/:category",
+				destination: "/categories/:category/1",
+				permanent: false,
 			},
 		];
 	},
 };
-
-module.exports = nextConfig
 
 const withMDX = require("@next/mdx")();
 module.exports = withMDX(nextConfig);
