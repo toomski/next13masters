@@ -2,10 +2,9 @@ import { type Metadata } from 'next'
 import { Suspense } from "react";
 import { getProductById } from "@/api/products";
 import { ProductCoverImage } from '@/ui/atoms/ProductCoverImage'
-import { ProductListItemDescription } from '@/ui/atoms/ProductListItemDescription'
 import { SuggestedProductsList } from '@/ui/organisms/SuggestedProductsList'
 import { formatMoney } from "@/utils"
-import { ProductVariant } from '@/ui/atoms/ProductVariant';
+import { ProductVariant } from '@/ui/atoms/ProductVariant'
 
 type ProductPageParams = {
     params: { productId: string }
